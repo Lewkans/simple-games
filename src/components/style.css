@@ -1,0 +1,71 @@
+.square {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  flex: 1;
+}
+
+.grid {
+  overflow: auto;
+  display: flex;
+}
+
+.buttons {
+  display: flex;
+}
+
+.tile {
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+  margin: 0px;
+  background-color: #333;
+  align-items: center;
+  font-size: 60pt; 
+  font-weight: bold;
+  color:aliceblue;
+}
+
+.tetro {
+  margin: 100px 20px 100px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.tetris {
+  height: 100%;
+  width: 100%;
+  flex: auto;
+  display: flex;
+}
+.row {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cell {
+  border: 1px solid #333333;
+  flex: 1;
+}
+
+.player {
+  background-color: yellow;
+}
+
+.placed {
+  background-color: aqua;
+}
+
+.row {
+  background-color: green;
+}

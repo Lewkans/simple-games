@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import FlagIcon from '@mui/icons-material/Flag';
+import Brightness5Icon from '@mui/icons-material/Brightness5';
 
 const DEFAULT_SIZE = 10
 const DEFAULT_BOMBS = 10
@@ -14,9 +16,10 @@ const Tile = class {
     }
 }
 
-const Mino = () => {
+const Mino = (props) => {
+    const {addScore} = props;
     const [grid, setGrid] = React.useState(Array.from({length: DEFAULT_SIZE}, () => Array.from({length: DEFAULT_SIZE}, () => new Tile())));
-    const [run, setRun] = React.useState('stop')
+    const [run, setRun] = React.useState('running')
     const [size, setSize] = React.useState(DEFAULT_SIZE);
     
     const newGrid = (size, bombs) => {
@@ -32,6 +35,7 @@ const Mino = () => {
                 setCell(i, j, new Tile());
             }
         }
+        setRun('running')
     }
     
     const setCell = (row, col, val) => {
@@ -41,8 +45,15 @@ const Mino = () => {
     }
     
     const setFlag = (row, col) => {
-        const temp = {...grid[row][col], flag: !grid[row][col].flag}
-        setCell(row, col, temp);
+        if (run !== 'lose') {
+            const temp = {...grid[row][col], flag: !grid[row][col].flag}
+            setCell(row, col, temp);
+        }
+    }
+    
+    const checkWin = () => {
+        // Check if all elements are revealed if not bomb or not revealed if bomb
+        return grid.every((row) => row.every((tile) => (tile.bomb && !tile.reveal) || (!tile.bomb && tile.reveal)))
     }
     
     const setSurrounding = () => {
@@ -81,8 +92,11 @@ const Mino = () => {
     }
     
     const revealCell = (row, col) => {
+        if (run !== 'running') {
+            return;
+        }
         if (row < 0 || row > size - 1 || col < 0 || col > size - 1) {
-            return
+            return;
         }
         // Check if cell is already revealed
         if (grid[row][col].reveal) {
@@ -93,8 +107,8 @@ const Mino = () => {
         setCell(row, col, temp);
         // Check if cell is bomb
         if (grid[row][col].bomb) {
-            setRun('over')
-            return
+            setRun('lose')
+            return;
         }
         // If === 0 then revealCell() the surrounding
         if (grid[row][col].surround === 0) {
@@ -107,10 +121,10 @@ const Mino = () => {
             revealCell(row + 1, col);
             revealCell(row + 1, col + 1);
         }
-    }
-    
-    const checkWin = () => {
-        return false;
+        if (checkWin()) {
+            setRun("win");
+            addScore();
+        }
     }
     
     React.useEffect(() => {
@@ -122,7 +136,9 @@ const Mino = () => {
         >
             <Grid
                 container
-                sx={{textAlign: 'center'}}
+                sx={{
+                    textAlign: 'center',
+                }}
             >
                 {Array.from({length: size}, (_, x) => x).map((row) => (
                     <Grid
@@ -141,16 +157,29 @@ const Mino = () => {
                                         backgroundColor: 'grey',
                                     },
                                 }}
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
                                 onContextMenu={(e) => {e.preventDefault(); setFlag(row, col)}}
                                 onClick={() => revealCell(row, col)}
                             >
-                                {val.reveal ? (val.bomb ? 'b' : val.surround) : (val.flag ? 'F' : '')}
+                                <Typography>
+                                    {val.reveal ? (val.bomb ? <Brightness5Icon /> : val.surround) : (val.flag ? <FlagIcon /> : '')}
+                                </Typography>
                             </Grid>
                         ))}
                     </Grid>
                 ))}
             </Grid>
-            <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Reset</Button>
+            {run === 'running' &&
+                <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Give Up</Button>
+            }
+            {run === 'win' &&
+                <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Restart</Button>
+            }
+            {run === 'lose' &&
+                <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Restart</Button>
+            }
         </Box>
     )
 }

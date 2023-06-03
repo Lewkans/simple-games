@@ -60,7 +60,7 @@ const Blanko = (props) => {
   }
   return (
     <Box sx={{display: 'flex', flexDirection: 'column'}}>
-      <Grid container spacing={0.5} sx={{alignContent: 'center', justifyContent: 'center'}}>
+      <Grid container spacing={0.5}>
         {
           Array.from(Array(size)).map((v, idx) => {
             return (

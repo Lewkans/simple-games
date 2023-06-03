@@ -32,7 +32,7 @@ const App = () => {
     setScore(localStorage.getItem('score'));
   }
   return (
-    <Box sx={{textAlign: 'center'}}>
+    <Box sx={{alignContent: 'center', justifyContent: 'center', textAlign:"center"}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tab} onChange={(e, n) => {setTab(n)}}>
           <Tab label={width <= 800 ? 'H' : 'Home'} onClick={() => navigate("/")}/>

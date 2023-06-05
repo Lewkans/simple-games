@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css'
+import { Button } from '@mui/material';
 const size = 3;
 
 const Slido = (props) => {
@@ -149,8 +150,8 @@ const Slido = (props) => {
         ))}
       </div>
       <div className="buttons">
-        <button onClick={() => solveGrid()} disabled={correctGrid()}>Solve</button>
-        <button onClick={() => newGrid()}>Reset</button>
+        <Button onClick={() => solveGrid()} disabled={correctGrid()}>Solve</Button>
+        <Button onClick={() => newGrid()}>Reset</Button>
       </div>
     </div>
   )

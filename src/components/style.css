@@ -13,8 +13,9 @@
 }
 
 .grid {
-  overflow: auto;
+  overflow: hidden;
   display: flex;
+  padding-top: 50px;
 }
 
 .buttons {

@@ -4,10 +4,9 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Blanko from './components/Blanko';
 import Slido from './components/Slido';
-import Tetro from './components/Tetro';
 import Mino from './components/Mino';
 
-import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Container, Tab, Tabs, Typography } from '@mui/material';
 
 const App = () => {
   const navigate = useNavigate();
@@ -32,17 +31,16 @@ const App = () => {
     setScore(localStorage.getItem('score'));
   }
   return (
-    <Box sx={{alignContent: 'center', justifyContent: 'center', textAlign:"center"}}>
+    <Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tab} onChange={(e, n) => {setTab(n)}}>
           <Tab label={width <= 800 ? 'H' : 'Home'} onClick={() => navigate("/")}/>
           <Tab label={width <= 800 ? 'B' : 'Blanko'} onClick={() => navigate("/blanko")}/>
           <Tab label={width <= 800 ? 'S' : 'Slido'} onClick={() => navigate("/slido")}/>
-          <Tab label={width <= 800 ? 'T' : 'Tetro'} onClick={() => navigate("/tetro")}/>
           <Tab label={width <= 800 ? 'M' : 'Mino'} onClick={() => navigate("/mino")}/>
         </Tabs>
       </Box>
-      <>
+      <Container>
         <Routes>
           <Route
             path="/blanko"
@@ -52,10 +50,6 @@ const App = () => {
             path="/slido"
             element={<Slido addScore={addScore}/>}
           />
-          {/* <Route
-            path="/tetro"
-            element={<Tetro addScore={addScore}/>}
-          /> */}
           <Route
             path="/mino"
             element={<Mino addScore={addScore}/>}
@@ -72,7 +66,7 @@ const App = () => {
             }
           />
         </Routes>
-      </>
+      </Container>
     </Box>
   );
 }

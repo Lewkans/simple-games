@@ -21,6 +21,7 @@ const Mino = (props) => {
     const [grid, setGrid] = React.useState(Array.from({length: DEFAULT_SIZE}, () => Array.from({length: DEFAULT_SIZE}, () => new Tile())));
     const [run, setRun] = React.useState('running')
     const [size, setSize] = React.useState(DEFAULT_SIZE);
+    const [noBombs, setNoBombs] = React.useState(DEFAULT_BOMBS);
     
     const newGrid = (size, bombs) => {
         resetGrid(size)
@@ -133,6 +134,11 @@ const Mino = (props) => {
     
     return (
         <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                textAlign: 'center',
+            }}
         >
             <Grid
                 container
@@ -172,13 +178,13 @@ const Mino = (props) => {
                 ))}
             </Grid>
             {run === 'running' &&
-                <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Give Up</Button>
+                <Button onClick={() => newGrid(size, noBombs)}>Give Up</Button>
             }
             {run === 'win' &&
-                <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Restart</Button>
+                <Button onClick={() => newGrid(size, noBombs)}>Restart</Button>
             }
             {run === 'lose' &&
-                <Button onClick={() => newGrid(DEFAULT_SIZE, DEFAULT_BOMBS)}>Restart</Button>
+                <Button onClick={() => newGrid(size, noBombs)}>Restart</Button>
             }
         </Box>
     )

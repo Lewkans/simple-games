@@ -59,12 +59,33 @@ const Blanko = (props) => {
     return Math.floor(Math.random() * Math.ceil(max));
   }
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column'}}>
-      <Grid container spacing={0.5}>
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      textAlign: 'center',
+    }}>
+      <Grid
+        container
+        spacing={0.5}
+        justifyContent="center"
+        sx={{pt: 10}}
+      >
         {
           Array.from(Array(size)).map((v, idx) => {
             return (
-              <Grid item sx={{border: '1px solid black', padding: 3}} key={idx}>
+              <Grid
+                item
+                sx={{
+                  border: '1px solid black',
+                  width: 50,
+                  height: 50,
+                }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                textAlign="center"
+                key={idx}
+              >
                 {
                   guess.charAt(idx) === '-'
                     ? <input onKeyUp={(e) => setGuessChar(e, idx)} size="1"/>
